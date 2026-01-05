@@ -1,0 +1,62 @@
+nível novato: 
+#include <stdio.h>
+
+#define QTD_ESTADOS 8   // Estados de A a H
+#define CIDADES_POR_ESTADO 4
+#define TOTAL_CARTAS (QTD_ESTADOS * CIDADES_POR_ESTADO)
+
+typedef struct {
+    char codigo[4];          // Ex.: "A01", "H04" (+ '\0')
+    int populacao;           // habitantes
+    float area;              // km²
+    float pib;               // em bilhões (ou unidade que você preferir)
+    int pontos_turisticos;   // quantidade
+} City;
+
+int main() {
+    City cartas[TOTAL_CARTAS];
+    const char estados[QTD_ESTADOS] = {'A','B','C','D','E','F','G','H'};
+
+    printf("=== Super Trunfo - Paises (Nivel Novato) ===\n");
+    printf("Cadastro de %d cartas (8 estados A-H x 4 cidades cada)\n\n", TOTAL_CARTAS);
+
+    // Entrada de dados
+    for (int e = 0; e < QTD_ESTADOS; e++) {
+        for (int c = 1; c <= CIDADES_POR_ESTADO; c++) {
+
+            int idx = e * CIDADES_POR_ESTADO + (c - 1);
+
+            // Monta código da carta: Estado + número com zero à esquerda (01..04)
+            snprintf(cartas[idx].codigo, sizeof(cartas[idx].codigo), "%c%02d", estados[e], c);
+
+            printf("---- Cadastro da carta %s ----\n", cartas[idx].codigo);
+
+            printf("Populacao (habitantes): ");
+            scanf("%d", &cartas[idx].populacao);
+
+            printf("Area (em km2): ");
+            scanf("%f", &cartas[idx].area);
+
+            printf("PIB (em bilhoes): ");
+            scanf("%f", &cartas[idx].pib);
+
+            printf("Numero de pontos turisticos: ");
+            scanf("%d", &cartas[idx].pontos_turisticos);
+
+            printf("\n");
+        }
+    }
+
+    // Saída organizada
+    printf("\n================= CARTAS CADASTRADAS =================\n");
+    for (int i = 0; i < TOTAL_CARTAS; i++) {
+        printf("Carta: %s\n", cartas[i].codigo);
+        printf("Populacao: %d\n", cartas[i].populacao);
+        printf("Area (km2): %.2f\n", cartas[i].area);
+        printf("PIB (bilhoes): %.2f\n", cartas[i].pib);
+        printf("Pontos turisticos: %d\n", cartas[i].pontos_turisticos);
+        printf("------------------------------------------------------\n");
+    }
+
+    return 0;
+}
